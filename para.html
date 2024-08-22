@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paranormal Threat Response 4</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: 'Arial Black', sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+        h1 {
+            color: #00FF00;
+            text-align: center;
+            padding-top: 50px;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            z-index: 3;
+            position: relative;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            z-index: 3;
+        }
+        .data-stream {
+            position: absolute;
+            animation: scroll 10s linear infinite;
+            font-family: 'Roboto', sans-serif;
+            color: #FF0000;
+            font-size: 14px;
+            line-height: 20px;
+            z-index: 3; /* Ensure it's above the matrix rain */
+        }
+        @keyframes scroll {
+            0% { top: 100%; }
+            100% { top: -100%; }
+        }
+        .data-stream:nth-child(2) { left: 10%; animation-duration: 12s; }
+        .data-stream:nth-child(3) { left: 20%; animation-duration: 8s; color: #00FF00; }
+        .data-stream:nth-child(4) { left: 30%; animation-duration: 15s; color: #0000FF; }
+        .data-stream:nth-child(5) { left: 40%; animation-duration: 9s; color: #FF0000; }
+        .data-stream:nth-child(6) { left: 50%; animation-duration: 13s; }
+        .data-stream:nth-child(7) { left: 60%; animation-duration: 11s; color: #00FF00; }
+        .data-stream:nth-child(8) { left: 70%; animation-duration: 14s; color: #0000FF; }
+        .data-stream:nth-child(9) { left: 80%; animation-duration: 10s; color: #FF0000; }
+        .data-stream:nth-child(10) { left: 90%; animation-duration: 12s; }
+        
+        .center-piece {
+            position: relative;
+            background-color: #000000;
+            border: 2px solid #00FF00;
+            padding: 20px;
+            animation: glitch 1.5s infinite;
+            box-shadow: 0 0 10px #00FF00;
+            z-index: 3; /* Ensure it's above the matrix rain */
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, -2px); }
+            80% { transform: translate(-2px, 2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Matrix rain styling */
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; /* Place behind the other elements */
+        }
+    </style>
+</head>
+<body>
+
+        
+    
+    <!-- Matrix Rain Effect -->
+    <canvas id="c"></canvas>
+    
+    <script>
+        var c = document.getElementById("c");
+        var ctx = c.getContext("2d");
+
+        // Function to resize the canvas to fill the entire screen
+        function resizeCanvas() {
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+        }
+
+        // Call resizeCanvas on window resize
+        window.addEventListener('resize', resizeCanvas, false);
+        resizeCanvas();
+
+        // Matrix rain characters
+        var english = "密碼不在這裡，請走開，這不是正確的道路，請遵循正確的道路，繼續你的生活，你的生命非常渺小，即將結束";
+        english = english.split("");
+
+        var font_size = 15;
+        var columns = c.width/font_size; // Number of columns for the rain
+        var drops = [];
+        for(var x = 0; x < columns; x++) {
+            drops[x] = 1; 
+        }
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, c.width, c.height);
+            
+            ctx.fillStyle = "#0F0"; // Green text
+            ctx.font = font_size + "px arial";
+            for(var i = 0; i < drops.length; i++) {
+                var text = english[Math.floor(Math.random()*english.length)];
+                ctx.fillText(text, i*font_size, drops[i]*font_size);
+                
+                if(drops[i]*font_size > c.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
+    </script>
+</body>
+</html>
